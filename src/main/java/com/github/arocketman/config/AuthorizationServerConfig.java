@@ -33,7 +33,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager);
+        endpoints
+                .authenticationManager(authenticationManager);
     }
 
     /**
@@ -43,10 +44,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.inMemory().withClient("my-trusted-client")
+        clients
+                .inMemory()
+                .withClient("my-trusted-client")
                 .authorizedGrantTypes("client_credentials", "password")
-                .authorities("ROLE_CLIENT","ROLE_TRUSTED_CLIENT").scopes("read","write","trust")
-                .resourceIds("oauth2-resource").accessTokenValiditySeconds(5000).secret("secret");
+                .authorities("ROLE_CLIENT","ROLE_TRUSTED_CLIENT")
+                .scopes("read","write","trust")
+                .resourceIds("oauth2-resource")
+                .accessTokenValiditySeconds(5000)
+                .secret(passwordEncoder.encode("secret"));
     }
 
     /**
@@ -57,7 +63,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("isAuthenticated()");
+        security
+                .checkTokenAccess("isAuthenticated()");
     }
 
 
